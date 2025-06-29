@@ -1,31 +1,52 @@
 package main
 
 import (
+	"Expense-Tracker/internal/helper"
 	"fmt"
 	"github.com/urfave/cli"
 	"log"
 	"os"
 )
 
+const filePath string = "data.json"
+
 func main() {
+	file, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, os.ModePerm)
+	if err != nil {
+		log.Fatal("Error opening file")
+	}
+	defer func() {
+		if err := file.Close(); err != nil {
+			log.Panic("Error closing file", err.Error())
+		}
+	}()
 	app := cli.NewApp()
 	app.Name = "Expense-Tracker"
 	app.Usage = "A simple expense tracker to manage your finances."
 	app.Commands = []cli.Command{
 		{Name: "add", Usage: "Add an expense with a description and amount", Flags: []cli.Flag{
 			cli.StringFlag{
-				Name:     "description, d",
+				Name:     "d, description",
 				Usage:    "Description of the expense",
+				Required: true,
+			},
+			cli.IntFlag{
+				Name:     "a, amount",
+				Usage:    "Amount of the expense",
 				Required: true,
 			},
 		}, Action: func(c *cli.Context) error {
 			description := c.String("description")
+			amount := c.Int("amount")
 			fmt.Printf("Adding expense to %s\n", description)
-			return nil
+			fmt.Println("Amount: ", amount)
+			err := helper.AddExpense(description, amount, file)
+			return err
 		},
+			UsageText: "add [Flag] <Value>",
 		},
 	}
-	err := app.Run(os.Args)
+	err = app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
 	}
