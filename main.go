@@ -38,8 +38,7 @@ func main() {
 		}, Action: func(c *cli.Context) error {
 			description := c.String("description")
 			amount := c.Int("amount")
-			fmt.Printf("Adding expense to %s\n", description)
-			fmt.Println("Amount: ", amount)
+			fmt.Println("Adding expense ", amount, " with description:", description)
 			err := helper.AddExpense(description, amount, file)
 			return err
 		},
