@@ -6,6 +6,7 @@ import (
 	"errors"
 	"io"
 	"os"
+	"time"
 )
 
 func AddExpense(description string, amount int, file *os.File) error {
@@ -18,6 +19,7 @@ func AddExpense(description string, amount int, file *os.File) error {
 	expenseEntry := model.Expense{
 		Description: description,
 		Amount:      amount,
+		Time:        time.Now().UTC(),
 	}
 	fileContents, err := io.ReadAll(file)
 	if err != nil {
