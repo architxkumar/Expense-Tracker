@@ -9,6 +9,10 @@ import (
 	"time"
 )
 
+// AddExpense adds a model.Expense entry in the file
+// after validating the description for non-empty and
+// amount for non-zero number. It returns error in case of validation error,
+// marshall/unmarshall or writing to file
 func AddExpense(description string, amount int, file *os.File) error {
 	if amount <= 0 {
 		return errors.New("amount must be greater than zero")
