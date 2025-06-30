@@ -24,7 +24,7 @@ func main() {
 	app.Name = "Expense-Tracker"
 	app.Usage = "A simple expense tracker to manage your finances."
 	app.Commands = []cli.Command{
-		{Name: "add", Usage: "Add an expense with a description and amount", Flags: []cli.Flag{
+		{Name: "add", Usage: "Add an expense with a description and amount", HelpName: "add", Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:     "d, description",
 				Usage:    "Description of the expense",
@@ -43,6 +43,16 @@ func main() {
 			return err
 		},
 			UsageText: "add [Flag] <Value>",
+			CustomHelpTemplate: `NAME:
+        {{.HelpName}} - {{.Usage}}
+
+USAGE: 
+        {{.HelpName}} -d <description> -a <amount>
+
+MANDATORY FLAGS:
+        -d, --description   Description of the expense
+        -a, --amount        Amount of the expense
+`,
 		},
 	}
 	err = app.Run(os.Args)
