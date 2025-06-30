@@ -54,6 +54,14 @@ MANDATORY FLAGS:
         -a, --amount        Amount of the expense
 `,
 		},
+		{
+			Name:  "list",
+			Usage: "List all expenses",
+			Action: func(c *cli.Context) error {
+				err := helper.PrintTask(file)
+				return err
+			},
+		},
 	}
 	err = app.Run(os.Args)
 	if err != nil {
