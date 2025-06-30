@@ -17,7 +17,7 @@ func main() {
 	}
 	defer func() {
 		if err := file.Close(); err != nil {
-			log.Panic("Error closing file", err.Error())
+			log.Panic("Error closing file: ", err.Error())
 		}
 	}()
 	app := cli.NewApp()
@@ -47,6 +47,6 @@ func main() {
 	}
 	err = app.Run(os.Args)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error initializing application: ", err.Error())
 	}
 }
