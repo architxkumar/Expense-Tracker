@@ -42,7 +42,6 @@ func main() {
 			err := helper.AddExpense(description, amount, file)
 			return err
 		},
-			UsageText: "add [Flag] <Value>",
 			CustomHelpTemplate: `NAME:
         {{.HelpName}} - {{.Usage}}
 
