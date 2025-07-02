@@ -21,9 +21,10 @@ func PrintTask(file *os.File) error {
 		if err := json.Unmarshal(fileContents, &expenseList); err != nil {
 			return err
 		}
-		fmt.Printf("# %-4s  %-9s  %-10s  %s\n", "Id", "Date", "Description", "Amount")
+		fmt.Printf("# %-4s  %-9s  %-5s  %s\n", "Id", "Date", "Amount", "Description")
 		for index, expense := range expenseList {
-			fmt.Printf("# %-4d  %v %-11s  $%d\n", index+1, expense.Time.Format("02-01-2006"), expense.Description, expense.Amount)
+			// Task Index is incremented by 1 for ease of access
+			fmt.Printf("# %-4d  %v $%-5d  %s\n", index+1, expense.Time.Format("02-01-2006"), expense.Amount, expense.Description)
 		}
 	}
 	return nil
