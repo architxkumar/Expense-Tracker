@@ -21,6 +21,12 @@ func PrintTask(file *os.File) error {
 		return nil
 	} else {
 		var expenseList []model.Expense
+		// When the json array is present inside "[]"
+		// but is empty
+		if len(expenseList) == 0 {
+			fmt.Println("No records exist")
+			return nil
+		}
 		if err := json.Unmarshal(fileContents, &expenseList); err != nil {
 			return err
 		}
