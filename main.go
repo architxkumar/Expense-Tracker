@@ -62,6 +62,35 @@ MANDATORY FLAGS:
 				return err
 			},
 		},
+		{
+			Name:  "delete",
+			Usage: "Delete an expense",
+			Action: func(c *cli.Context) error {
+				id := c.Int("id")
+				err := helper.DeleteTask(file, id)
+				if err == nil {
+					fmt.Println("Task Deleted Successfully")
+				}
+				return err
+			},
+			HelpName: "delete",
+			CustomHelpTemplate: `NAME:
+		{{.HelpName}} - {{.Usage}}
+USAGE:
+		{{.HelpName}} --id <id>
+
+MANDATORY FLAG:
+		--id			Id of the expense
+
+`,
+			Flags: []cli.Flag{
+				cli.IntFlag{
+					Name:     " id",
+					Usage:    "Expense ID",
+					Required: true,
+				},
+			},
+		},
 	}
 	err = app.Run(os.Args)
 	if err != nil {
