@@ -90,6 +90,14 @@ MANDATORY FLAG:
 				},
 			},
 		},
+		{
+			Name:  "summary",
+			Usage: "Show summary of expenses",
+			Action: func(c *cli.Context) error {
+				err := helper.ExpenseSummary(file)
+				return err
+			},
+		},
 	}
 	err = app.Run(os.Args)
 	if err != nil {
