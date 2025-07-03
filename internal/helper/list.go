@@ -8,10 +8,10 @@ import (
 	"os"
 )
 
-// PrintTask reads expense records from file and prints them
+// ListTask reads expense records from file and prints them
 // in a table. It prints "No records found" in case of empty file.
 // It returns an error in case of file opening or invalid JSON.
-func PrintTask(file *os.File) error {
+func ListTask(file *os.File) error {
 	fileContents, err := io.ReadAll(file)
 	if err != nil {
 		return err

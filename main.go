@@ -57,7 +57,7 @@ MANDATORY FLAGS:
 			Name:  "list",
 			Usage: "List all expenses",
 			Action: func(c *cli.Context) error {
-				err := helper.PrintTask(file)
+				err := helper.ListTask(file)
 				return err
 			},
 		},
