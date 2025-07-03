@@ -2,6 +2,7 @@ package main
 
 import (
 	"Expense-Tracker/internal/helper"
+	"errors"
 	"fmt"
 	"github.com/urfave/cli"
 	"log"
@@ -91,12 +92,38 @@ MANDATORY FLAG:
 			},
 		},
 		{
-			Name:  "summary",
-			Usage: "Show summary of expenses",
+			Name:     "summary",
+			Usage:    "Show summary of expenses",
+			HelpName: "summary",
+			Flags: []cli.Flag{
+				cli.IntFlag{
+					Name:     "month",
+					Required: false,
+					Usage:    "Month of expenses",
+					Value:    0,
+				},
+			},
 			Action: func(c *cli.Context) error {
-				err := helper.ExpenseSummary(file)
+				month := c.Int("month")
+				// 0 represents non flag invocation use case
+				if month < 0 || month > 12 {
+					return errors.New("invalid month")
+				}
+				err := helper.ExpenseSummary(file, month)
 				return err
 			},
+			CustomHelpTemplate: `NAME:
+		{{.HelpName}} - {{.Usage}}
+USAGE:
+		{{.HelpName}} [FLAG] [VALUE]
+
+OPTIONAL FLAG:
+		--month <month>		month of expenses
+
+EXAMPLE:
+{{.HelpName}} --month 		To find summary of all expenses
+{{.HelpName}} --month 1		To find summary of expense for the month of January
+`,
 		},
 	}
 	err = app.Run(os.Args)
