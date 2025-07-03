@@ -19,47 +19,44 @@ func DeleteTask(file *os.File, id int) error {
 		return errors.New("id must be greater than zero")
 	}
 	fileContents, err := io.ReadAll(file)
-	if err == nil {
-		if len(fileContents) > 0 {
-			var expenseList []model.Expense
-			err = json.Unmarshal(fileContents, &expenseList)
-			if err != nil {
-				return err
-			}
-			length := len(expenseList)
-			expenseIndex := id - 1
-			if expenseIndex < length {
-				expenseList = append(expenseList[:expenseIndex], expenseList[expenseIndex+1:]...)
-				output, err := json.Marshal(expenseList)
-				if err != nil {
-					return err
-				}
-				// To overwrite file contents
-				err = os.Truncate(file.Name(), 0)
-				if err != nil {
-					return err
-				}
-				// To place file pointer to start before writing to file
-				_, err = file.Seek(0, 0)
-				if err != nil {
-					return err
-				}
-				_, err = file.Write(output)
-				if err != nil {
-					return err
-				}
-
-			} else {
-				fmt.Println("No tasks with the specified id exists")
-				return nil
-			}
-
-		} else {
-			fmt.Println("No records exist")
-			return nil
-		}
-	} else {
+	if err != nil {
 		return errors.New("error reading file content")
+	}
+	if len(fileContents) == 0 {
+		fmt.Println("No records exist")
+		return nil
+	}
+	var expenseList []model.Expense
+	err = json.Unmarshal(fileContents, &expenseList)
+	if err != nil {
+		return err
+	}
+	length := len(expenseList)
+	expenseIndex := id - 1
+	if expenseIndex < length {
+		expenseList = append(expenseList[:expenseIndex], expenseList[expenseIndex+1:]...)
+		output, err := json.Marshal(expenseList)
+		if err != nil {
+			return err
+		}
+		// To overwrite file contents
+		err = os.Truncate(file.Name(), 0)
+		if err != nil {
+			return err
+		}
+		// To place file pointer to start before writing to file
+		_, err = file.Seek(0, 0)
+		if err != nil {
+			return err
+		}
+		_, err = file.Write(output)
+		if err != nil {
+			return err
+		}
+
+	} else {
+		fmt.Println("No tasks with the specified id exists")
+		return nil
 	}
 	return nil
 }
