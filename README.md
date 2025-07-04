@@ -13,6 +13,7 @@ Built as a learning project for [roadmap.sh](https://roadmap.sh/projects/expense
 - Delete specific expense record 
 - Expense summarization for all records or by month
 - Store data locally in JSON file
+- Export contents to CSV file
 
 ## Usage
 Clone the Repo and compile the program:
@@ -39,6 +40,11 @@ Command usage:
 # Expense summary for a month
 ./expense-tracker summary --month 1
 
+# Exporting contents to csv file
+./expense-tracker export
+
+# Command usage
+./expense-tracker --help
 ```
 
 ## Licence
