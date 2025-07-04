@@ -125,6 +125,14 @@ EXAMPLE:
 {{.HelpName}} --month 1		To find summary of expense for the month of January
 `,
 		},
+		{
+			Name:  "export",
+			Usage: "Export expenses to a csv file",
+			Action: func(c *cli.Context) error {
+				err := helper.ExportExpenses(file)
+				return err
+			},
+		},
 	}
 	err = app.Run(os.Args)
 	if err != nil {
